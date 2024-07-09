@@ -6,11 +6,8 @@ import adminRouter from "./routes/admin-routes.js";
 import movieRouter from "./routes/movie-routes.js";
 import bookingsRouter from "./routes/booking-routes.js";
 import cors from "cors";
-
 dotenv.config();
 const app = express();
-const PORT = process.env.PORT || 5000;
-const MONGO_URI = process.env.MONGO_URI;
 
 // middlewares
 app.use(cors());
@@ -20,22 +17,15 @@ app.use("/admin", adminRouter);
 app.use("/movie", movieRouter);
 app.use("/booking", bookingsRouter);
 
-// Connect to MongoDB
 mongoose
-  .connect(MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-  })
-  .then(() => {
-    console.log("Connected to MongoDB");
-    // Start server
-    app.listen(PORT, () => {
-      console.log(`Server is running on port ${PORT}`);
-    });
-  })
-  .catch((error) => {
-    console.error("MongoDB connection failed:", error.message);
-  });
+  .connect(
+    `mongodb+srv://renjithaniltvm:key2Renjith!@cluster0.apmlmbr.mongodb.net/MovieBookingSystem`
+  )
+  .then(() =>
+    app.listen(5000, () =>
+      console.log("Connected To Database And Server is running")
+    )
+  )
+  .catch((e) => console.log(e));
 
 
